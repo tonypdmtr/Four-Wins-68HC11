@@ -1,71 +1,53 @@
-		switch RomSection
-;-------------------------------------------------------------------------------
+;*******************************************************************************
 ; Utils.inc:
-;
 ; Hilfsmethoden für das Terminal und den RAM.
-;-------------------------------------------------------------------------------		
-		
-		
-;-------------------------------------------------------------------------------
-; clrRam:
-;
+;*******************************************************************************
+
+;*******************************************************************************
+                    #ROM
+;*******************************************************************************
+
+;*******************************************************************************
 ; Setzt alle Bits im RAM auf 0.
-;-------------------------------------------------------------------------------
 
-clrRam	
-		psha
-		pshx
-		
-		ldaa	#0
-		ldx		#ramBegin
-		
-clrRamLoop		
-		staa	0,x
-		inx
-		cpx		#ramEnd
-		bne		clrRamLoop
-		
-		pulx
-		pula
-		rts
+clrRam              proc
+                    pshx
+                    ldx       #ramBegin
+Loop@@              clr       ,x
+                    inx
+                    cpx       #ramEnd
+                    bne       Loop@@
+                    pulx
+                    rts
 
-
-;-------------------------------------------------------------------------------
-; putChar:
-;
+;*******************************************************************************
 ; Zeichen in A auf dem Terminal ausgeben.
-;
 ; @param Akku a: Das auszugebende Zeichen
-;-------------------------------------------------------------------------------
 
-putChar       brclr scsr, #$80, * ; Warte, bis der Ausgabepuffer leer ist
-              staa scdr           ; Zeichen in A abschicken
-              rts
+putChar             proc
+                    brclr     SCSR,#$80,*         ; Warte, bis der Ausgabepuffer leer ist
+                    sta       SCDR                ; Zeichen in A abschicken
+                    rts
 
-
-;-------------------------------------------------------------------------------
+;*******************************************************************************
 ; crlf:
-;
 ; Zeilenumbruch auf dem Terminal ausgeben.
-;-------------------------------------------------------------------------------
 
-crlf          psha
-              ldaa #13           ; CR
-              jsr putChar
-              ldaa #10           ; LF
-              jsr putChar
-              pula
-              rts
+crlf                proc
+                    psha
+                    lda       #CR
+                    bsr       putChar
+                    lda       #LF
+                    bsr       putChar
+                    pula
+                    rts
 
-
-;-------------------------------------------------------------------------------
-; space:
-;
+;*******************************************************************************
 ; Leerzeichen auf dem Terminal ausgeben.
-;-------------------------------------------------------------------------------
 
-space         psha
-              ldaa #32           ; Leerzeichen
-              jsr putChar
-              pula
-              rts
+space               proc
+                    psha
+                    lda       #' '
+                    bsr       putChar
+                    pula
+                    rts
