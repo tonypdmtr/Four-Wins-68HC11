@@ -140,23 +140,26 @@ stone1ToBuffer      proc
                     xgdx
 
                     lda       #%00011000          ; Stein für Spieler 1 (gefüllt)
-                    ora       2,x
-                    sta       2,x
+                    bsr       ?Save
 
                     lda       #%00111100
-                    ora       3,x
-                    sta       3,x
+                    bsr       ?Save
 
                     lda       #%00111100
-                    ora       4,x
-                    sta       4,x
+                    bsr       ?Save
 
                     lda       #%00011000
-                    ora       5,x
-                    sta       5,x
+                    bsr       ?Save
 
                     pula
                     pulx
+                    rts
+
+;*******************************************************************************
+
+?Save               ora       2,x
+                    sta       2,x
+                    inx
                     rts
 
 ;*******************************************************************************
@@ -166,7 +169,7 @@ stone1ToBuffer      proc
 
 stone2ToBuffer      proc
                     pshx
-                    pshd
+                    psha
           ;-------------------------------------- ; Berechne Adresse der Zelle im Buffer
                     ldx       #board
                     xgdx
@@ -174,21 +177,17 @@ stone2ToBuffer      proc
                     xgdx
 
                     lda       #%00011000          ; Stein für Spieler 2 (leer)
-                    ora       2,x
-                    sta       2,x
+                    bsr       ?Save
 
                     lda       #%00100100
-                    ora       3,x
-                    sta       3,x
+                    bsr       ?Save
 
                     lda       #%00100100
-                    ora       4,x
-                    sta       4,x
+                    bsr       ?Save
 
                     lda       #%00011000
-                    ora       5,x
-                    sta       5,x
+                    bsr       ?Save
 
-                    puld
+                    pula
                     pulx
                     rts
