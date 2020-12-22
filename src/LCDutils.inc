@@ -85,7 +85,7 @@ LCDSend             proc
                     psha
                     bsr       SPItransfer
                     lda       PIO_C               ; Deselect LCD
-                    oraa      #%11000000          ; SPI_SEL = 3 = EEPROM
+                    ora       #%11000000          ; SPI_SEL = 3 = EEPROM
                     sta       PIO_C
                     pula
                     rts
@@ -96,7 +96,7 @@ LCDSend             proc
 
 LCDSetRow           proc
                     psha
-                    oraa      pageCmdMsk
+                    ora       pageCmdMsk
                     bsr       LCDcommand
                     pula
                     rts
@@ -111,7 +111,7 @@ LCDSetRow           proc
 
 LCDsetColMSB        proc
                     psha
-                    oraa      colCmdMskM
+                    ora       colCmdMskM
                     bsr       LCDcommand
                     pula
                     rts
@@ -123,7 +123,7 @@ LCDsetColMSB        proc
 
 LCDsetColLSB        proc
                     psha
-                    oraa      colCmdMskL
+                    ora       colCmdMskL
                     bsr       LCDcommand
                     pula
                     rts

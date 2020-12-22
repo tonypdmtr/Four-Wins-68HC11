@@ -15,15 +15,15 @@
 nibbletohex         fcb       "0123456789ABCDEF"
 
 putNibble           proc
-                    pshy
+                    pshx
                     pshd
                     andb      #$0F                ; Nibble maskieren,
-                    ldy       #nibbletohex        ; aus der Zeichentabelle
-                    aby                           ; das passende Zeichen waehlen
-                    lda       ,y                  ; und in A laden.
+                    ldx       #nibbletohex        ; aus der Zeichentabelle
+                    abx                           ; das passende Zeichen waehlen
+                    lda       ,x                  ; und in A laden.
                     jsr       putChar
                     puld
-                    puly
+                    pulx
                     rts
 
 ;*******************************************************************************
@@ -63,8 +63,7 @@ putHexBuffer        proc
                     pulb
                     jsr       putByte             ; Anschliessend B ausgeben, den unteren
           ;-------------------------------------- ; Teil von D
-                    jsr       space
-                    rts
+                    jmp       space
 
 ;*******************************************************************************
 ; Carry-Flag als Binaerzahl ausgeben
@@ -184,7 +183,6 @@ debug               proc                          ; Alter PC (Stackpointer + 7)
                     pull                          ; Alle Register wiederhergestellt.
                     rts                           ; Nach dem Ruecksprung ist auch der
                                                   ; Stackpointer wieder wie vorher.
-
 ;*******************************************************************************
 ; Gibt den gesamten Buffer in Hexadezimal auf dem Terminal aus.
 ; @param board: Das Board (Buffer)

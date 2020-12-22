@@ -141,45 +141,17 @@ drawCursor          proc
 
 deleteCursor        proc
                     psha
-
                     lda       #CURSOR_ROW
                     jsr       LCDSetRow
-
-                    lda       cursorColumn
-                    adda      #1
-                    jsr       LCDSetCol
-                    lda       #%00000000
-                    jsr       LCDdata
-
-                    lda       cursorColumn
-                    adda      #2
-                    jsr       LCDSetCol
-                    lda       #%00000000
-                    jsr       LCDdata
-
-                    lda       cursorColumn
-                    adda      #3
-                    jsr       LCDSetCol
-                    lda       #%00000000
-                    jsr       LCDdata
-
-                    lda       cursorColumn
-                    adda      #4
-                    jsr       LCDSetCol
-                    lda       #%00000000
-                    jsr       LCDdata
-
-                    lda       cursorColumn
-                    adda      #5
-                    jsr       LCDSetCol
-                    lda       #%00000000
-                    jsr       LCDdata
-
-                    lda       cursorColumn
-                    adda      #6
-                    jsr       LCDSetCol
-                    lda       #%00000000
-                    jsr       LCDdata
-
+                    lda       #1
+Loop@@              bsr       Send@@
+                    inca
+                    cmpa      #6
+                    bls       Loop@@
                     pula
                     rts
+
+Send@@              adda      cursorColumn
+                    jsr       LCDSetCol
+                    clra
+                    jmp       LCDdata
