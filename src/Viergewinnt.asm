@@ -123,5 +123,5 @@ Loop@@              jsr       readInput           ; Hauptschleife
                     #VECTORS
 ;*******************************************************************************
 
-                    org       VRESET              ; Reset-Vektor
+                    org       Vreset              ; Reset-Vektor
                     dw        Start               ; Programm-Startadresse

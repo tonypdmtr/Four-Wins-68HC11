@@ -16,10 +16,9 @@
 drawCell            proc
                     push
           ;-------------------------------------- ; Berechne die absolute Adresse der Zelle im Buffer
-                    ldy       #board
-                    xgdy
+                    ldd       #board
                     addd      cellAddress
-                    xgdy
+                    tdy
           ;--------------------------------------
           ; Zeile und Spalte der Zelle berechnen und in D (Spalte)
           ; und X (Zeile) Speichern
@@ -61,7 +60,7 @@ Loop@@    ;-------------------------------------- ; Spalte setzen
 
 cellToBuffer        proc
                     pshx
-                    pshd
+                    psha
           ;-------------------------------------- ; Berechne Adresse der Zelle im Buffer
                     ldx       #board
                     xgdx
@@ -92,7 +91,7 @@ cellToBuffer        proc
                     lda       #%11111111          ; rechter Rand der Zelle
                     sta       7,x
 
-                    puld
+                    pula
                     pulx
                     rts
 
@@ -133,7 +132,7 @@ Loop@@              jsr       drawCell
 
 stone1ToBuffer      proc
                     pshx
-                    pshd
+                    psha
           ;-------------------------------------- ; Berechne Adresse der Zelle im Buffer
                     ldx       #board
                     xgdx
@@ -141,22 +140,22 @@ stone1ToBuffer      proc
                     xgdx
 
                     lda       #%00011000          ; Stein für Spieler 1 (gefüllt)
-                    oraa      2,x
+                    ora       2,x
                     sta       2,x
 
                     lda       #%00111100
-                    oraa      3,x
+                    ora       3,x
                     sta       3,x
 
                     lda       #%00111100
-                    oraa      4,x
+                    ora       4,x
                     sta       4,x
 
                     lda       #%00011000
-                    oraa      5,x
+                    ora       5,x
                     sta       5,x
 
-                    puld
+                    pula
                     pulx
                     rts
 
@@ -175,19 +174,19 @@ stone2ToBuffer      proc
                     xgdx
 
                     lda       #%00011000          ; Stein für Spieler 2 (leer)
-                    oraa      2,x
+                    ora       2,x
                     sta       2,x
 
                     lda       #%00100100
-                    oraa      3,x
+                    ora       3,x
                     sta       3,x
 
                     lda       #%00100100
-                    oraa      4,x
+                    ora       4,x
                     sta       4,x
 
                     lda       #%00011000
-                    oraa      5,x
+                    ora       5,x
                     sta       5,x
 
                     puld
